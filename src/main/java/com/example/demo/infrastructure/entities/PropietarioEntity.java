@@ -1,6 +1,6 @@
 package com.example.demo.infrastructure.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -32,7 +32,7 @@ public class PropietarioEntity {
     private String celular;
 	
 	@Column(name = "fecha_nacimiento", nullable = false)
-	private final LocalDate fechaNacimiento;
+	private final Date fechaNacimiento;
 	
 	@Column(nullable = false)
 	private final String correo;
@@ -51,7 +51,7 @@ public class PropietarioEntity {
 	}
 
 	public PropietarioEntity(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
-			LocalDate fechaNacimiento, String correo, String claveEncriptada) {
+			Date fechaNacimiento, String correo, String claveEncriptada) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -87,7 +87,7 @@ public class PropietarioEntity {
 		return celular;
 	}
 
-	public LocalDate getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 

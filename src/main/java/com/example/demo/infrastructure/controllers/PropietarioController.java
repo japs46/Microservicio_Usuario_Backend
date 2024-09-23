@@ -2,6 +2,7 @@ package com.example.demo.infrastructure.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +22,12 @@ public class PropietarioController {
 	
 	private Logger LOGGUER= LoggerFactory.getLogger(PropietarioController.class);
 	
-	private final PropietarioService propietarioService;
+	@Autowired
+	private  PropietarioService propietarioService;
 
-	public PropietarioController(PropietarioService propietarioService) {
-		this.propietarioService = propietarioService;
-	}
+//	public PropietarioController(PropietarioService propietarioService) {
+//		this.propietarioService = propietarioService;
+//	}
 
 	@Operation(summary = "Crear un nuevo Propietario", description = "Guarda un nuevo propietario en la base de datos.")
     @ApiResponse(responseCode = "200", description = "Propietario guardada exitosamente")

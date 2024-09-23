@@ -1,6 +1,6 @@
 package com.example.demo.domain.models;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -32,8 +32,7 @@ public class Propietario {
 	private final String celular;
 	
 	@NotNull(message = "La fecha de nacimiento no puede ser null")
-	@NotEmpty(message = "La fecha de nacimiento no puede ser vacio")
-	private final LocalDate fechaNacimiento;
+	private final Date fechaNacimiento;
 	
 	@NotNull(message = "El correo no puede ser null")
 	@NotEmpty(message = "El correo no puede ser vacio")
@@ -45,7 +44,7 @@ public class Propietario {
 	private final String claveEncriptada;
 
 	public Propietario(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
-			LocalDate fechaNacimiento, String correo, String claveEncriptada) {
+			Date fechaNacimiento, String correo, String claveEncriptada) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -81,7 +80,7 @@ public class Propietario {
 		return celular;
 	}
 
-	public LocalDate getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
