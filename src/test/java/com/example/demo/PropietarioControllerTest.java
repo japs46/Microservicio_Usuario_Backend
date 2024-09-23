@@ -30,8 +30,6 @@ public class PropietarioControllerTest {
 	@MockBean
 	private PropietarioService propietarioService;
 
-	
-
 	public ObjectMapper objectMapper;
 
 	@BeforeEach

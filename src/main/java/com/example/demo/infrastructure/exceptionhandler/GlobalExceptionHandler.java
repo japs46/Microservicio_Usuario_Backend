@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.demo.application.respuesta.ErrorResponse;
 import com.example.demo.application.respuesta.Errores;
+import com.example.demo.domain.exception.UnderageException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -37,5 +38,11 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public String handleValidationExceptions2(HttpMessageNotReadableException ex) {
 		return "No hay cuerpo de solicitud";
+    }
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST) // Devuelve un 400 Bad Request
+	@ExceptionHandler(UnderageException.class)
+	public String menorDeEdadException(UnderageException ex) {
+		return ex.getMessage();
     }
 }
