@@ -19,22 +19,25 @@ public class PropietarioEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private final Long id;
 
+	@Column(nullable = false)
 	private final String nombre;
 	
+	@Column(nullable = false)
 	private final String apellido;
 	
-	@Column(name = "documento_identidad")
+	@Column(name = "documento_identidad", nullable = false)
 	private final String documentoDeIdentidad;
 	
-	@Column(length = 13)
+	@Column(length = 13, nullable = false)
     private String celular;
 	
-	@Column(name = "fecha_nacimiento")
+	@Column(name = "fecha_nacimiento", nullable = false)
 	private final LocalDate fechaNacimiento;
 	
+	@Column(nullable = false)
 	private final String correo;
 	
-	@Column(name = "clave")
+	@Column(name = "clave", nullable = false)
 	private final String claveEncriptada;
 	
 	public PropietarioEntity() {
