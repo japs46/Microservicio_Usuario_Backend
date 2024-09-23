@@ -36,9 +36,19 @@ public class PropietarioEntity {
 	
 	@Column(name = "clave")
 	private final String claveEncriptada;
+	
+	public PropietarioEntity() {
+		this.id = null;
+		this.nombre = "";
+		this.apellido = "";
+		this.documentoDeIdentidad = "";
+		this.fechaNacimiento = null;
+		this.correo = "";
+		this.claveEncriptada = "";
+	}
 
 	public PropietarioEntity(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
-			LocalDate fechaNacimiento, String correo, String clave) {
+			LocalDate fechaNacimiento, String correo, String claveEncriptada) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -46,7 +56,7 @@ public class PropietarioEntity {
 		this.celular = celular;
 		this.fechaNacimiento = fechaNacimiento;
 		this.correo = correo;
-		this.claveEncriptada = encriptarClave(clave);
+		this.claveEncriptada = encriptarClave(claveEncriptada);
 	}
 
 	private String encriptarClave(String clave) {
