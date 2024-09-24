@@ -1,8 +1,8 @@
 package com.example.demo.domain.ports.out;
 
-import com.example.demo.domain.models.Propietario;
+import com.example.demo.domain.models.Usuario;
 
 public interface PropietarioRepositoryPort {
 
-	public Propietario save(Propietario propietario);
+	public Usuario save(Usuario propietario);
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.application.services.PropietarioService;
 import com.example.demo.domain.exception.UnderageException;
-import com.example.demo.domain.models.Propietario;
+import com.example.demo.domain.models.Usuario;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,11 +33,11 @@ public class PropietarioController {
     @ApiResponse(responseCode = "200", description = "Propietario guardada exitosamente")
     @ApiResponse(responseCode = "406", description = "No se aceptó la solicitud")
 	@PostMapping("/guardar")
-	public ResponseEntity<?> guardarPropietario(@Valid @RequestBody Propietario propietario){
+	public ResponseEntity<?> guardarPropietario(@Valid @RequestBody Usuario propietario){
 		
 		try {
 			LOGGUER.info("Inicio Creacion de Propietario");
-			Propietario propietarioBd = propietarioService.createPropietario(propietario);
+			Usuario propietarioBd = propietarioService.createPropietario(propietario);
 			
 			return ResponseEntity.ok(propietarioBd);
 		} catch (UnderageException e) {

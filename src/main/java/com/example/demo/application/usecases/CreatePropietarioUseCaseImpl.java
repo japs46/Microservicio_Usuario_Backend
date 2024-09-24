@@ -8,7 +8,8 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.exception.UnderageException;
-import com.example.demo.domain.models.Propietario;
+import com.example.demo.domain.models.Rol;
+import com.example.demo.domain.models.Usuario;
 import com.example.demo.domain.ports.in.CreatePropietarioUseCase;
 import com.example.demo.domain.ports.out.PropietarioRepositoryPort;
 
@@ -22,13 +23,13 @@ public class CreatePropietarioUseCaseImpl implements CreatePropietarioUseCase {
 	}
 
 	@Override
-	public Propietario createPropietario(Propietario propietario) {
+	public Usuario createPropietario(Usuario propietario) {
 		
 		int edad = calcularEdad(propietario.getFechaNacimiento());
 		if (edad < 18) {
 			throw new UnderageException("El propietario no puede ser menor de edad");
 		}
-		
+		propietario.setRol(Rol.PROPIETARIO);
 		return propietarioRepositoryPort.save(propietario);
 	}
 
