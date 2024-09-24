@@ -17,7 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.application.services.PropietarioService;
-import com.example.demo.domain.models.Propietario;
+import com.example.demo.domain.models.Rol;
+import com.example.demo.domain.models.Usuario;
 import com.example.demo.infrastructure.controllers.PropietarioController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -39,9 +40,9 @@ public class PropietarioControllerTest {
 
 	 @Test
 	    void testGuardarPropietario_Success() throws Exception {
-	        Propietario propietario = new Propietario(1L, "John", "Doe", "12345678", "1234567890", new Date(), "johndoe@example.com", "clave123");
+	        Usuario propietario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date(), "johndoe@example.com", "clave123",Rol.PROPIETARIO);
 
-	        when(propietarioService.createPropietario(any(Propietario.class))).thenReturn(propietario);
+	        when(propietarioService.createPropietario(any(Usuario.class))).thenReturn(propietario);
 
 	        mockMvc.perform(post("/api/propietarios/guardar")
 	                .contentType(MediaType.APPLICATION_JSON)
@@ -53,9 +54,9 @@ public class PropietarioControllerTest {
 
 	    @Test
 	    void testGuardarPropietario_InternalServerError() throws Exception {
-	        when(propietarioService.createPropietario(any(Propietario.class))).thenThrow(new RuntimeException("Error al crear propietario"));
+	        when(propietarioService.createPropietario(any(Usuario.class))).thenThrow(new RuntimeException("Error al crear propietario"));
 
-	        Propietario propietario = new Propietario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123");
+	        Usuario propietario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123",Rol.PROPIETARIO);
 
 	        mockMvc.perform(post("/api/propietarios/guardar")
 	                .contentType(MediaType.APPLICATION_JSON)

@@ -2,7 +2,7 @@ package com.example.demo.application.services;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.models.Propietario;
+import com.example.demo.domain.models.Usuario;
 import com.example.demo.domain.ports.in.CreatePropietarioUseCase;
 
 @Service
@@ -15,7 +15,7 @@ public class PropietarioService implements CreatePropietarioUseCase{
 	}
 
 	@Override
-	public Propietario createPropietario(Propietario propietario) {
+	public Usuario createPropietario(Usuario propietario) {
 		return createPropietarioUseCase.createPropietario(propietario);
 	}
 

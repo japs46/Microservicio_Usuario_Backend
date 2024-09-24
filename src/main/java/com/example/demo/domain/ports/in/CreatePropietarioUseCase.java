@@ -1,8 +1,8 @@
 package com.example.demo.domain.ports.in;
 
-import com.example.demo.domain.models.Propietario;
+import com.example.demo.domain.models.Usuario;
 
 public interface CreatePropietarioUseCase {
 
-	public Propietario createPropietario(Propietario propietario);
+	public Usuario createPropietario(Usuario propietario);
 }

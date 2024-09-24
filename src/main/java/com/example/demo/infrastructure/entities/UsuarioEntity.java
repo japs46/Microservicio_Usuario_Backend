@@ -4,16 +4,20 @@ import java.util.Date;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.example.demo.domain.models.Rol;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "propietario")
-public class PropietarioEntity {
+@Table(name = "usuario")
+public class UsuarioEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +44,10 @@ public class PropietarioEntity {
 	@Column(name = "clave", nullable = false)
 	private final String claveEncriptada;
 	
-	public PropietarioEntity() {
+	@Enumerated(EnumType.STRING) // Para usar el enum de roles
+    private Rol rol;
+	
+	public UsuarioEntity() {
 		this.id = null;
 		this.nombre = "";
 		this.apellido = "";
@@ -50,8 +57,8 @@ public class PropietarioEntity {
 		this.claveEncriptada = "";
 	}
 
-	public PropietarioEntity(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
-			Date fechaNacimiento, String correo, String claveEncriptada) {
+	public UsuarioEntity(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
+			Date fechaNacimiento, String correo, String claveEncriptada,Rol rol) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -60,6 +67,7 @@ public class PropietarioEntity {
 		this.fechaNacimiento = fechaNacimiento;
 		this.correo = correo;
 		this.claveEncriptada = encriptarClave(claveEncriptada);
+		this.rol = rol;
 	}
 
 	private String encriptarClave(String clave) {
@@ -97,6 +105,10 @@ public class PropietarioEntity {
 
 	public String getClaveEncriptada() {
 		return claveEncriptada;
+	}
+
+	public Rol getRol() {
+		return rol;
 	}
 
 }

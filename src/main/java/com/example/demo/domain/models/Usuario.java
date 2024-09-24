@@ -4,13 +4,15 @@ import java.util.Date;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class Propietario {
+public class Usuario {
 
 	private final Long id;
 	
@@ -43,8 +45,11 @@ public class Propietario {
 	@NotEmpty(message = "La clave no puede ser vacio")
 	private final String claveEncriptada;
 
-	public Propietario(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
-			Date fechaNacimiento, String correo, String claveEncriptada) {
+	@JsonIgnore
+    private Rol rol;
+
+	public Usuario(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
+			Date fechaNacimiento, String correo, String claveEncriptada,Rol rol) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -53,6 +58,7 @@ public class Propietario {
 		this.fechaNacimiento = fechaNacimiento;
 		this.correo = correo;
 		this.claveEncriptada = encriptarClave(claveEncriptada);
+		this.rol = rol;
 	}
 
 	private String encriptarClave(String clave) {
@@ -91,4 +97,14 @@ public class Propietario {
 	public String getClaveEncriptada() {
 		return claveEncriptada;
 	}
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+	
+	
 }

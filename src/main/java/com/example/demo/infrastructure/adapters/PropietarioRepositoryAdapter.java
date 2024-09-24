@@ -2,9 +2,9 @@ package com.example.demo.infrastructure.adapters;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.domain.models.Propietario;
+import com.example.demo.domain.models.Usuario;
 import com.example.demo.domain.ports.out.PropietarioRepositoryPort;
-import com.example.demo.infrastructure.entities.PropietarioEntity;
+import com.example.demo.infrastructure.entities.UsuarioEntity;
 import com.example.demo.infrastructure.mappers.PropietarioMapper;
 import com.example.demo.infrastructure.repositories.PropietarioEntityRepository;
 
@@ -18,8 +18,8 @@ public class PropietarioRepositoryAdapter implements PropietarioRepositoryPort{
 	}
 
 	@Override
-	public Propietario save(Propietario propietario) {
-		PropietarioEntity propietarioEntity = PropietarioMapper.toEntity(propietario);
+	public Usuario save(Usuario propietario) {
+		UsuarioEntity propietarioEntity = PropietarioMapper.toEntity(propietario);
 		return PropietarioMapper.toDomain(propietarioEntityRepository.save(propietarioEntity));
 	}
 
