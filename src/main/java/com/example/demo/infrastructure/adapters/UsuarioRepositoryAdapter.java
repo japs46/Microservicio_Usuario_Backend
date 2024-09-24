@@ -1,5 +1,7 @@
 package com.example.demo.infrastructure.adapters;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.domain.models.Usuario;
@@ -22,10 +24,11 @@ public class UsuarioRepositoryAdapter implements UsuarioRepositoryPort{
 		UsuarioEntity usuarioEntity = UsuarioMapper.toEntity(usuario);
 		return UsuarioMapper.toDomain(usuarioEntityRepository.save(usuarioEntity));
 	}
-
+	
 	@Override
-	public Usuario findById(Long id) {
-		return UsuarioMapper.toDomain(usuarioEntityRepository.findById(id).orElseThrow());
+	public Optional<Usuario> findById(Long id) {
+		Optional<UsuarioEntity> usuario = usuarioEntityRepository.findById(id);
+		return usuario.map(UsuarioMapper::toDomain);
 	}
 
 }

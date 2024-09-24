@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/propietarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 	
 	private Logger LOGGUER= LoggerFactory.getLogger(UsuarioController.class);
@@ -54,16 +54,16 @@ public class UsuarioController {
 	@Operation(summary = "Buscar un usuario por id", description = "Busca un usuario en la base de datos por id de usuario.")
     @ApiResponse(responseCode = "200", description = "Usuario Encontrado exitosamente")
     @ApiResponse(responseCode = "406", description = "No se aceptó la solicitud")
-	@GetMapping("buscar/{id}")
+	@GetMapping("/buscarPorId/{id}")
 	public ResponseEntity<?> buscarUsuarioPorId(@PathVariable Long id){
 		try {
 			LOGGUER.info("Iniciando Busqueda Usuario");
-			Usuario propietarioBd = UsuarioService.buscarPorId(id);
+			Usuario usuarioBd = UsuarioService.buscarPorId(id);
 			
-			return ResponseEntity.ok(propietarioBd);
+			return ResponseEntity.ok(usuarioBd);
 		} catch (Exception e) {
-			LOGGUER.error("Ocurrio un error, descripcion del error: "+e.getMessage());
-			return ResponseEntity.internalServerError().body("Ocurrio un error en el servidor");
+			LOGGUER.error("Ocurrio un inconveniente al buscar por id, descripcion del inconveniente: "+e.getMessage());
+			return ResponseEntity.internalServerError().body("inconveniente buscar usuario por id: "+e.getMessage());
 		}
 	}
 }

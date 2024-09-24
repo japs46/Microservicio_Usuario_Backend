@@ -4,8 +4,7 @@ import java.util.Date;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -45,7 +44,7 @@ public class Usuario {
 	@NotEmpty(message = "La clave no puede ser vacio")
 	private final String claveEncriptada;
 
-	@JsonIgnore
+	@Schema(hidden = true)
     private Rol rol;
 
 	public Usuario(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
@@ -106,5 +105,18 @@ public class Usuario {
 		this.rol = rol;
 	}
 	
-	
+	@Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", documentoDeIdentidad='" + documentoDeIdentidad + '\'' +
+                ", celular='" + celular + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", correo='" + correo + '\'' +
+                ", claveEncriptada='" + claveEncriptada + '\'' +
+                ", rol='" + rol + '\'' +
+                '}';
+    }
 }

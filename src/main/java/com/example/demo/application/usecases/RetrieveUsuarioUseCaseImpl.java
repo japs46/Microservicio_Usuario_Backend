@@ -17,7 +17,15 @@ public class RetrieveUsuarioUseCaseImpl implements RetrieveUsuarioUseCase{
 
 	@Override
 	public Usuario buscarPorId(Long id) {
-		return propietarioRepositoryPort.findById(id);
+		
+	    if (id == null) {
+	        throw new IllegalArgumentException("El ID no puede ser nulo.");
+	    }
+	    if (id <= 0) {
+	        throw new IllegalArgumentException("El ID debe ser un número positivo.");
+	    }
+		
+		return propietarioRepositoryPort.findById(id).orElseThrow();
 	}
 
 }
