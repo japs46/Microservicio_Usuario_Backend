@@ -11,14 +11,14 @@ import com.example.demo.domain.exception.UnderageException;
 import com.example.demo.domain.models.Rol;
 import com.example.demo.domain.models.Usuario;
 import com.example.demo.domain.ports.in.CreatePropietarioUseCase;
-import com.example.demo.domain.ports.out.PropietarioRepositoryPort;
+import com.example.demo.domain.ports.out.UsuarioRepositoryPort;
 
 @Component
 public class CreatePropietarioUseCaseImpl implements CreatePropietarioUseCase {
 
-	private final PropietarioRepositoryPort propietarioRepositoryPort;
+	private final UsuarioRepositoryPort propietarioRepositoryPort;
 
-	public CreatePropietarioUseCaseImpl(PropietarioRepositoryPort propietarioRepositoryPort) {
+	public CreatePropietarioUseCaseImpl(UsuarioRepositoryPort propietarioRepositoryPort) {
 		this.propietarioRepositoryPort = propietarioRepositoryPort;
 	}
 
