@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -38,31 +39,34 @@ public class PropietarioControllerTest {
 			objectMapper=new ObjectMapper();
 	}
 
-	 @Test
-	    void testGuardarPropietario_Success() throws Exception {
-	        Usuario propietario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date(), "johndoe@example.com", "clave123",Rol.PROPIETARIO);
+	@Test
+    void testGuardarPropietario_Success() throws Exception {
+		String fechaStr = "2001-09-24"; 
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		Date fecha = formato.parse(fechaStr);
+        Usuario usuario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", fecha, "johndoe@example.com", "clave123",Rol.PROPIETARIO);
 
-	        when(propietarioService.createPropietario(any(Usuario.class))).thenReturn(propietario);
+        when(propietarioService.createPropietario(any(Usuario.class))).thenReturn(usuario);
 
-	        mockMvc.perform(post("/api/propietarios/guardar")
-	                .contentType(MediaType.APPLICATION_JSON)
-	                .content(objectMapper.writeValueAsString(propietario)))
-	                .andExpect(status().isOk())
-	                .andExpect(jsonPath("$.id").value(1L))
-	                .andExpect(jsonPath("$.nombre").value("John"));
-	    }
+        mockMvc.perform(post("/api/usuarios/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(usuario)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.nombre").value("John"));
+    }
 
-	    @Test
-	    void testGuardarPropietario_InternalServerError() throws Exception {
-	        when(propietarioService.createPropietario(any(Usuario.class))).thenThrow(new RuntimeException("Error al crear propietario"));
+    @Test
+    void testGuardarPropietario_InternalServerError() throws Exception {
+        when(propietarioService.createPropietario(any(Usuario.class))).thenThrow(new RuntimeException("Error al crear propietario"));
 
-	        Usuario propietario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123",Rol.PROPIETARIO);
+        Usuario propietario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123",Rol.PROPIETARIO);
 
-	        mockMvc.perform(post("/api/propietarios/guardar")
-	                .contentType(MediaType.APPLICATION_JSON)
-	                .content(objectMapper.writeValueAsString(propietario)))
-	                .andExpect(status().isInternalServerError())
-	                .andExpect(jsonPath("$").value("Ocurrio un error en el servidor"));
-	    }
+        mockMvc.perform(post("/api/usuarios/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(propietario)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$").value("Ocurrio un error en el servidor"));
+    }
 
 }
