@@ -44,7 +44,8 @@ public class UsuarioEntity {
 	@Column(name = "clave", nullable = false)
 	private final String claveEncriptada;
 	
-	@Enumerated(EnumType.STRING) // Para usar el enum de roles
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
     private Rol rol;
 	
 	public UsuarioEntity() {

@@ -3,7 +3,7 @@ package com.example.demo.infrastructure.mappers;
 import com.example.demo.domain.models.Usuario;
 import com.example.demo.infrastructure.entities.UsuarioEntity;
 
-public class PropietarioMapper {
+public class UsuarioMapper {
 
 	public static Usuario toDomain(UsuarioEntity entity) {
         return new Usuario(entity.getId(), entity.getNombre(),
