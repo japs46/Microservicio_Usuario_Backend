@@ -2,6 +2,8 @@ package com.example.demo.infrastructure.entities;
 
 import java.util.Date;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.example.demo.domain.models.Rol;
 
 import jakarta.persistence.Column;
@@ -40,7 +42,7 @@ public class UsuarioEntity {
 	private final String correo;
 	
 	@Column(name = "clave", nullable = false)
-	private final String clave;
+	private final String claveEncriptada;
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -53,11 +55,11 @@ public class UsuarioEntity {
 		this.documentoDeIdentidad = "";
 		this.fechaNacimiento = null;
 		this.correo = "";
-		this.clave = "";
+		this.claveEncriptada = "";
 	}
 
 	public UsuarioEntity(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
-			Date fechaNacimiento, String correo, String clave,Rol rol) {
+			Date fechaNacimiento, String correo, String claveEncriptada,Rol rol) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -65,8 +67,13 @@ public class UsuarioEntity {
 		this.celular = celular;
 		this.fechaNacimiento = fechaNacimiento;
 		this.correo = correo;
-		this.clave = clave;
+		this.claveEncriptada = encriptarClave(claveEncriptada);
 		this.rol = rol;
+	}
+
+	private String encriptarClave(String clave) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.encode(clave);
 	}
 	
 	public Long getId() {
@@ -97,8 +104,8 @@ public class UsuarioEntity {
 		return correo;
 	}
 
-	public String getClave() {
-		return clave;
+	public String getClaveEncriptada() {
+		return claveEncriptada;
 	}
 
 	public Rol getRol() {
