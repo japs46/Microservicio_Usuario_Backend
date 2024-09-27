@@ -3,6 +3,7 @@ package com.example.demo.application.usecases;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.models.Usuario;
+import com.example.demo.domain.models.UsuarioLogin;
 import com.example.demo.domain.ports.in.RetrieveUsuarioUseCase;
 import com.example.demo.domain.ports.out.UsuarioRepositoryPort;
 
@@ -29,13 +30,13 @@ public class RetrieveUsuarioUseCaseImpl implements RetrieveUsuarioUseCase{
 	}
 
 	@Override
-	public Usuario buscarPorCorreo(String correo) {
+	public UsuarioLogin buscarUsuarioLoginPorCorreo(String correo) {
 		
 		if (correo == null) {
 	        throw new IllegalArgumentException("El Correo no puede ser nulo.");
 	    }
 		
-		return propietarioRepositoryPort.findByCorreo(correo).orElseThrow();
+		return propietarioRepositoryPort.findUsuarioLoginByCorreo(correo).orElseThrow();
 	}
 
 }

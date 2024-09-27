@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.application.services.UsuarioService;
 import com.example.demo.domain.exception.UnderageException;
 import com.example.demo.domain.models.Usuario;
+import com.example.demo.domain.models.UsuarioLogin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -69,18 +70,18 @@ public class UsuarioController {
 		}
 	}
 	
-	@Operation(summary = "Buscar un usuario por id", description = "Busca un usuario en la base de datos por id de usuario.")
+	@Operation(summary = "Buscar un usuario por correo", description = "Busca un usuario en la base de datos por correo de usuario.")
     @ApiResponse(responseCode = "200", description = "Usuario Encontrado exitosamente")
     @ApiResponse(responseCode = "406", description = "No se aceptó la solicitud")
-	@GetMapping("/buscarPorCorreo/{correo}")
+	@GetMapping("/buscarUsuarioLoginPorCorreo/{correo}")
 	public ResponseEntity<?> buscarUsuarioPorCorreo(@PathVariable String correo){
 		try {
 			LOGGUER.info("Iniciando Busqueda Usuario");
-			Usuario usuarioBd = UsuarioService.buscarPorCorreo(correo);
+			UsuarioLogin usuarioLogin = UsuarioService.buscarUsuarioLoginPorCorreo(correo);
 			
-			return ResponseEntity.ok(usuarioBd);
+			return ResponseEntity.ok(usuarioLogin);
 		} catch (Exception e) {
-			LOGGUER.error("Ocurrio un inconveniente al buscar por id, descripcion del inconveniente: "+e.getMessage());
+			LOGGUER.error("Ocurrio un inconveniente al buscar por correo, descripcion del inconveniente: "+e.getMessage());
 			return ResponseEntity.internalServerError().body("inconveniente buscar usuario por id: "+e.getMessage());
 		}
 	}

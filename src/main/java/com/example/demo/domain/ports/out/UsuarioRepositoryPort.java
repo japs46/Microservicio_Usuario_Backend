@@ -3,6 +3,7 @@ package com.example.demo.domain.ports.out;
 import java.util.Optional;
 
 import com.example.demo.domain.models.Usuario;
+import com.example.demo.domain.models.UsuarioLogin;
 
 public interface UsuarioRepositoryPort {
 
@@ -10,5 +11,5 @@ public interface UsuarioRepositoryPort {
 	
 	public Optional<Usuario> findById(Long id);
 	
-	public Optional<Usuario> findByCorreo(String correo);
+	public Optional<UsuarioLogin> findUsuarioLoginByCorreo(String correo);
 }

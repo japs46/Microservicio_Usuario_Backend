@@ -5,8 +5,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.domain.models.Usuario;
+import com.example.demo.domain.models.UsuarioLogin;
 import com.example.demo.domain.ports.out.UsuarioRepositoryPort;
 import com.example.demo.infrastructure.entities.UsuarioEntity;
+import com.example.demo.infrastructure.mappers.UsuarioLoginMapper;
 import com.example.demo.infrastructure.mappers.UsuarioMapper;
 import com.example.demo.infrastructure.repositories.UsuarioEntityRepository;
 
@@ -32,8 +34,8 @@ public class UsuarioRepositoryAdapter implements UsuarioRepositoryPort{
 	}
 
 	@Override
-	public Optional<Usuario> findByCorreo(String correo) {
-		return usuarioEntityRepository.findByCorreo(correo).map(UsuarioMapper::toDomain);
+	public Optional<UsuarioLogin> findUsuarioLoginByCorreo(String correo) {
+		return usuarioEntityRepository.findUsuarioLoginByCorreo(correo).map(UsuarioLoginMapper::toDomain);
 	}
 
 }
