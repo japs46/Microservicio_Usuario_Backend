@@ -31,4 +31,9 @@ public class UsuarioRepositoryAdapter implements UsuarioRepositoryPort{
 		return usuario.map(UsuarioMapper::toDomain);
 	}
 
+	@Override
+	public Optional<Usuario> findByCorreo(String correo) {
+		return usuarioEntityRepository.findByCorreo(correo).map(UsuarioMapper::toDomain);
+	}
+
 }

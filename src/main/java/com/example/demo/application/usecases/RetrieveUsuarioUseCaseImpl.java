@@ -28,4 +28,14 @@ public class RetrieveUsuarioUseCaseImpl implements RetrieveUsuarioUseCase{
 		return propietarioRepositoryPort.findById(id).orElseThrow();
 	}
 
+	@Override
+	public Usuario buscarPorCorreo(String correo) {
+		
+		if (correo == null) {
+	        throw new IllegalArgumentException("El Correo no puede ser nulo.");
+	    }
+		
+		return propietarioRepositoryPort.findByCorreo(correo).orElseThrow();
+	}
+
 }

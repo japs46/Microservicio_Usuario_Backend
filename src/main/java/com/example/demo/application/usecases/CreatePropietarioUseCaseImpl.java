@@ -5,6 +5,7 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.exception.UnderageException;
@@ -30,7 +31,15 @@ public class CreatePropietarioUseCaseImpl implements CreatePropietarioUseCase {
 			throw new UnderageException("El propietario no puede ser menor de edad");
 		}
 		propietario.setRol(Rol.PROPIETARIO);
-		return propietarioRepositoryPort.save(propietario);
+		
+		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+		
+		Usuario propietarioNuevo = new Usuario(propietario.getId(), propietario.getNombre(),
+				propietario.getApellido(), propietario.getDocumentoDeIdentidad(),
+				propietario.getCelular(), propietario.getFechaNacimiento(),
+				propietario.getCorreo(), passwordEncoder.encode(propietario.getClave()), Rol.PROPIETARIO);
+		
+		return propietarioRepositoryPort.save(propietarioNuevo);
 	}
 
 	private int calcularEdad(Date fechaNacimiento) {
