@@ -33,14 +33,16 @@ public class UsuarioController {
 	@Operation(summary = "Crear un nuevo Propietario", description = "Guarda un nuevo propietario en la base de datos.")
     @ApiResponse(responseCode = "200", description = "Propietario guardada exitosamente")
     @ApiResponse(responseCode = "406", description = "No se aceptó la solicitud")
-	@PostMapping("/guardar")
+	@PostMapping("/guardarPropietario")
 	public ResponseEntity<?> guardarPropietario(@Valid @RequestBody Usuario propietario){
 		
 		try {
 			LOGGUER.info("Inicio Creacion de Propietario");
+			
 			Usuario propietarioBd = UsuarioService.createPropietario(propietario);
 			
 			return ResponseEntity.ok(propietarioBd);
+			
 		} catch (UnderageException e) {
 			LOGGUER.error("Ocurrio un problema: "+e.getMessage());
 			return ResponseEntity.internalServerError().body(e.getMessage());
@@ -59,6 +61,22 @@ public class UsuarioController {
 		try {
 			LOGGUER.info("Iniciando Busqueda Usuario");
 			Usuario usuarioBd = UsuarioService.buscarPorId(id);
+			
+			return ResponseEntity.ok(usuarioBd);
+		} catch (Exception e) {
+			LOGGUER.error("Ocurrio un inconveniente al buscar por id, descripcion del inconveniente: "+e.getMessage());
+			return ResponseEntity.internalServerError().body("inconveniente buscar usuario por id: "+e.getMessage());
+		}
+	}
+	
+	@Operation(summary = "Buscar un usuario por id", description = "Busca un usuario en la base de datos por id de usuario.")
+    @ApiResponse(responseCode = "200", description = "Usuario Encontrado exitosamente")
+    @ApiResponse(responseCode = "406", description = "No se aceptó la solicitud")
+	@GetMapping("/buscarPorCorreo/{correo}")
+	public ResponseEntity<?> buscarUsuarioPorCorreo(@PathVariable String correo){
+		try {
+			LOGGUER.info("Iniciando Busqueda Usuario");
+			Usuario usuarioBd = UsuarioService.buscarPorCorreo(correo);
 			
 			return ResponseEntity.ok(usuarioBd);
 		} catch (Exception e) {

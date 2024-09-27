@@ -5,4 +5,6 @@ import com.example.demo.domain.models.Usuario;
 public interface RetrieveUsuarioUseCase {
 
 	public Usuario buscarPorId(Long id);
+	
+	public Usuario buscarPorCorreo(String correo);
 }

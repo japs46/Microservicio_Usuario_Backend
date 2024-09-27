@@ -2,6 +2,8 @@ package com.example.demo.domain.models;
 
 import java.util.Date;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -40,13 +42,13 @@ public class Usuario {
 	
 	@NotNull(message = "La clave no puede ser null")
 	@NotEmpty(message = "La clave no puede ser vacio")
-	private final String clave;
+	private final String claveEncriptada;
 
 	@Schema(hidden = true)
     private Rol rol;
 
 	public Usuario(Long id, String nombre, String apellido, String documentoDeIdentidad, String celular,
-			Date fechaNacimiento, String correo, String clave,Rol rol) {
+			Date fechaNacimiento, String correo, String claveEncriptada,Rol rol) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -54,8 +56,13 @@ public class Usuario {
 		this.celular = celular;
 		this.fechaNacimiento = fechaNacimiento;
 		this.correo = correo;
-		this.clave = clave;
+		this.claveEncriptada = encriptarClave(claveEncriptada);
 		this.rol = rol;
+	}
+
+	private String encriptarClave(String clave) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.encode(clave);
 	}
 
 	public Long getId() {
@@ -86,8 +93,8 @@ public class Usuario {
 		return correo;
 	}
 
-	public String getClave() {
-		return clave;
+	public String getClaveEncriptada() {
+		return claveEncriptada;
 	}
 
 	public Rol getRol() {
@@ -108,7 +115,7 @@ public class Usuario {
                 ", celular='" + celular + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", correo='" + correo + '\'' +
-                ", claveEncriptada='" + clave + '\'' +
+                ", claveEncriptada='" + claveEncriptada + '\'' +
                 ", rol='" + rol + '\'' +
                 '}';
     }

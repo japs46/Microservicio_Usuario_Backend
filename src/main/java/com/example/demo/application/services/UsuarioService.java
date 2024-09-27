@@ -27,4 +27,9 @@ public class UsuarioService implements CreatePropietarioUseCase,RetrieveUsuarioU
 		return retrieveUsuarioUseCase.buscarPorId(id);
 	}
 
+	@Override
+	public Usuario buscarPorCorreo(String correo) {
+		return retrieveUsuarioUseCase.buscarPorCorreo(correo);
+	}
+
 }

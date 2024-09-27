@@ -9,4 +9,6 @@ public interface UsuarioRepositoryPort {
 	public Usuario save(Usuario usuario);
 	
 	public Optional<Usuario> findById(Long id);
+	
+	public Optional<Usuario> findByCorreo(String correo);
 }
