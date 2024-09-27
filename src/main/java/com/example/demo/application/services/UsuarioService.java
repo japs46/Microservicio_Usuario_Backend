@@ -3,6 +3,7 @@ package com.example.demo.application.services;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.models.Usuario;
+import com.example.demo.domain.models.UsuarioLogin;
 import com.example.demo.domain.ports.in.CreatePropietarioUseCase;
 import com.example.demo.domain.ports.in.RetrieveUsuarioUseCase;
 
@@ -28,8 +29,8 @@ public class UsuarioService implements CreatePropietarioUseCase,RetrieveUsuarioU
 	}
 
 	@Override
-	public Usuario buscarPorCorreo(String correo) {
-		return retrieveUsuarioUseCase.buscarPorCorreo(correo);
+	public UsuarioLogin buscarUsuarioLoginPorCorreo(String correo) {
+		return retrieveUsuarioUseCase.buscarUsuarioLoginPorCorreo(correo);
 	}
 
 }
