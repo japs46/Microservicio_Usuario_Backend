@@ -17,20 +17,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.application.services.UsuarioService;
+import com.example.demo.application.services.PropietarioService;
 import com.example.demo.domain.models.Rol;
 import com.example.demo.domain.models.Usuario;
-import com.example.demo.infrastructure.controllers.UsuarioController;
+import com.example.demo.infrastructure.controllers.PropietarioController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(UsuarioController.class)
+@WebMvcTest(PropietarioController.class)
 public class PropietarioControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private UsuarioService propietarioService;
+	private PropietarioService propietarioService;
 
 	public ObjectMapper objectMapper;
 
