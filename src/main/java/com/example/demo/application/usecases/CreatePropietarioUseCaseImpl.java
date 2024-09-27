@@ -17,10 +17,10 @@ import com.example.demo.domain.ports.out.UsuarioRepositoryPort;
 @Component
 public class CreatePropietarioUseCaseImpl implements CreatePropietarioUseCase {
 
-	private final UsuarioRepositoryPort propietarioRepositoryPort;
+	private final UsuarioRepositoryPort usuarioRepositoryPort;
 
-	public CreatePropietarioUseCaseImpl(UsuarioRepositoryPort propietarioRepositoryPort) {
-		this.propietarioRepositoryPort = propietarioRepositoryPort;
+	public CreatePropietarioUseCaseImpl(UsuarioRepositoryPort usuarioRepositoryPort) {
+		this.usuarioRepositoryPort = usuarioRepositoryPort;
 	}
 
 	@Override
@@ -30,7 +30,6 @@ public class CreatePropietarioUseCaseImpl implements CreatePropietarioUseCase {
 		if (edad < 18) {
 			throw new UnderageException("El propietario no puede ser menor de edad");
 		}
-		propietario.setRol(Rol.PROPIETARIO);
 		
 		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 		
@@ -39,7 +38,7 @@ public class CreatePropietarioUseCaseImpl implements CreatePropietarioUseCase {
 				propietario.getCelular(), propietario.getFechaNacimiento(),
 				propietario.getCorreo(), passwordEncoder.encode(propietario.getClave()), Rol.PROPIETARIO);
 		
-		return propietarioRepositoryPort.save(propietarioNuevo);
+		return usuarioRepositoryPort.save(propietarioNuevo);
 	}
 
 	private int calcularEdad(Date fechaNacimiento) {
