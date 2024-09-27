@@ -28,12 +28,10 @@ public class SecurityConfig{
 		http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-        	.requestMatchers("/auth/login").permitAll()
-        	.requestMatchers("/api/usuarios/buscarUsuarioLoginPorCorreo/{correo}").permitAll()
+        	.requestMatchers("/auth/**").permitAll()
         	.requestMatchers("/swagger-ui/index.html").permitAll()
-            .requestMatchers("/api/usuarios/guardarPropietario").hasRole("ADMIN")
+            .requestMatchers("/api/propietarios/**").hasRole("ADMIN")
             .requestMatchers("/api/empleados/**").hasRole("PROPIETARIO")
-            .requestMatchers("/empleado/**").hasRole("EMPLEADO")
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // JWT no usa sesiones
