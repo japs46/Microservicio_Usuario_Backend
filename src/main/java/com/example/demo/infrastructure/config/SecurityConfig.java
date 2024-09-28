@@ -32,6 +32,7 @@ public class SecurityConfig{
         	.requestMatchers("/swagger-ui/index.html").permitAll()
             .requestMatchers("/api/propietarios/**").hasRole("ADMIN")
             .requestMatchers("/api/empleados/**").hasRole("PROPIETARIO")
+            .requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN","PROPIETARIO")
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // JWT no usa sesiones
