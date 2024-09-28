@@ -17,20 +17,28 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.application.services.EmpleadoService;
+import com.example.demo.application.services.ClienteService;
 import com.example.demo.domain.models.Rol;
 import com.example.demo.domain.models.Usuario;
-import com.example.demo.infrastructure.controllers.EmpleadoController;
+import com.example.demo.infrastructure.controllers.ClienteController;
+import com.example.demo.infrastructure.filters.JwtAuthenticationFilter;
+import com.example.demo.infrastructure.providers.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(EmpleadoController.class)
-public class EmpleadoControllerTest {
+@WebMvcTest(ClienteController.class)
+public class ClienteControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private EmpleadoService empleadoService;
+	private ClienteService clienteService;
+	
+	@MockBean
+	private JwtAuthenticationFilter jwtAuthenticationFilter;
+	
+	@MockBean
+	private JwtTokenProvider jwtTokenProvider;
 
 	public ObjectMapper objectMapper;
 
@@ -40,31 +48,31 @@ public class EmpleadoControllerTest {
 	}
 	
 	@Test
-    void testGuardarEmpleado_Success() throws Exception {
+    void testGuardarCliente_Success() throws Exception {
 		String fechaStr = "2001-09-24"; 
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date fecha = formato.parse(fechaStr);
-        Usuario usuario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", fecha, "johndoe@example.com", "clave123",Rol.EMPLEADO);
+        Usuario cliente = new Usuario(1L, "John", "Doe", "12345678", "1234567890", fecha, "johndoe@example.com", "clave123",Rol.CLIENTE);
 
-        when(empleadoService.createEmpledo(any(Usuario.class))).thenReturn(usuario);
+        when(clienteService.createCliente(any(Usuario.class))).thenReturn(cliente);
 
-        mockMvc.perform(post("/api/empleados/guardar")
+        mockMvc.perform(post("/api/clientes/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(usuario)))
+                .content(objectMapper.writeValueAsString(cliente)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.nombre").value("John"));
     }
 
     @Test
-    void testGuardarEmpleado_InternalServerError() throws Exception {
-        when(empleadoService.createEmpledo(any(Usuario.class))).thenThrow(new RuntimeException("Error al crear propietario"));
+    void testGuardarCliente_InternalServerError() throws Exception {
+        when(clienteService.createCliente(any(Usuario.class))).thenThrow(new RuntimeException("Error al crear propietario"));
 
-        Usuario propietario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123",Rol.EMPLEADO);
+        Usuario cliente = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123",Rol.CLIENTE);
 
-        mockMvc.perform(post("/api/empleados/guardar")
+        mockMvc.perform(post("/api/clientes/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(propietario)))
+                .content(objectMapper.writeValueAsString(cliente)))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$").value("Ocurrio un error en el servidor"));
     }
