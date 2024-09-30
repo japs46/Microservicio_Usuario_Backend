@@ -14,18 +14,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.application.services.ClienteService;
+import com.example.demo.domain.exception.UnderageException;
 import com.example.demo.domain.models.Rol;
 import com.example.demo.domain.models.Usuario;
+import com.example.demo.infrastructure.config.SecurityConfig;
 import com.example.demo.infrastructure.controllers.ClienteController;
-import com.example.demo.infrastructure.filters.JwtAuthenticationFilter;
+import com.example.demo.infrastructure.filters.MyUserDetailsService;
 import com.example.demo.infrastructure.providers.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(ClienteController.class)
+@Import(SecurityConfig.class)
 public class ClienteControllerTest {
 
 	@Autowired
@@ -33,12 +37,12 @@ public class ClienteControllerTest {
 	
 	@MockBean
 	private ClienteService clienteService;
-	
-	@MockBean
-	private JwtAuthenticationFilter jwtAuthenticationFilter;
-	
+
 	@MockBean
 	private JwtTokenProvider jwtTokenProvider;
+	
+	@MockBean
+	private MyUserDetailsService myUserDetailsService;
 
 	public ObjectMapper objectMapper;
 
@@ -66,7 +70,7 @@ public class ClienteControllerTest {
 
     @Test
     void testGuardarCliente_InternalServerError() throws Exception {
-        when(clienteService.createCliente(any(Usuario.class))).thenThrow(new RuntimeException("Error al crear propietario"));
+        when(clienteService.createCliente(any(Usuario.class))).thenThrow(new UnderageException("Error al crear cliente"));
 
         Usuario cliente = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123",Rol.CLIENTE);
 
@@ -74,6 +78,6 @@ public class ClienteControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(cliente)))
                 .andExpect(status().isInternalServerError())
-                .andExpect(jsonPath("$").value("Ocurrio un error en el servidor"));
+                .andExpect(jsonPath("$").value("Error al crear cliente"));
     }
 }

@@ -14,16 +14,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.application.services.PropietarioService;
 import com.example.demo.domain.models.Rol;
 import com.example.demo.domain.models.Usuario;
+import com.example.demo.infrastructure.config.SecurityConfig;
 import com.example.demo.infrastructure.controllers.PropietarioController;
+import com.example.demo.infrastructure.filters.MyUserDetailsService;
+import com.example.demo.infrastructure.providers.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(PropietarioController.class)
+@Import(SecurityConfig.class)
 public class PropietarioControllerTest {
 
 	@Autowired
@@ -31,12 +38,27 @@ public class PropietarioControllerTest {
 	
 	@MockBean
 	private PropietarioService propietarioService;
+	
+	@MockBean
+	private JwtTokenProvider jwtTokenProvider;
+	
+	@MockBean
+	private MyUserDetailsService myUserDetailsService;
 
 	public ObjectMapper objectMapper;
 
 	@BeforeEach
 	void setUp() {
-			objectMapper=new ObjectMapper();
+		objectMapper=new ObjectMapper();
+		
+        when(jwtTokenProvider.validateToken(any(String.class), any(UserDetails.class))).thenReturn(true);
+        when(jwtTokenProvider.getUsernameFromToken(any(String.class))).thenReturn("johndoe");
+        
+        UserDetails userDetails = User.withUsername("johndoe")
+            .password("password123")
+            .roles("ADMIN")
+            .build();
+        when(myUserDetailsService.loadUserByUsername("johndoe")).thenReturn(userDetails);
 	}
 
 	@Test
@@ -47,10 +69,13 @@ public class PropietarioControllerTest {
         Usuario usuario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", fecha, "johndoe@example.com", "clave123",Rol.PROPIETARIO);
 
         when(propietarioService.createPropietario(any(Usuario.class))).thenReturn(usuario);
+        
+        String token = "Bearer your-valid-jwt-token";
 
-        mockMvc.perform(post("/api/usuarios/guardar")
+        mockMvc.perform(post("/api/propietarios/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(usuario)))
+                .content(objectMapper.writeValueAsString(usuario))
+                .header("Authorization", token))  // Agregar token a la solicitud)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.nombre").value("John"));
@@ -62,9 +87,12 @@ public class PropietarioControllerTest {
 
         Usuario propietario = new Usuario(1L, "John", "Doe", "12345678", "1234567890", new Date() , "johndoe@example.com", "clave123",Rol.PROPIETARIO);
 
-        mockMvc.perform(post("/api/usuarios/guardar")
+        String token = "Bearer your-valid-jwt-token";
+        
+        mockMvc.perform(post("/api/propietarios/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(propietario)))
+                .content(objectMapper.writeValueAsString(propietario))
+                .header("Authorization", token))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$").value("Ocurrio un error en el servidor"));
     }

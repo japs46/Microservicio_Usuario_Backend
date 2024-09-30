@@ -32,7 +32,7 @@ public class ClienteController {
     @ApiResponse(responseCode = "200", description = "cliente guardada exitosamente")
     @ApiResponse(responseCode = "406", description = "No se aceptó la solicitud")
 	@PostMapping("/guardar")
-	public ResponseEntity<?> guardarEmpleado(@Valid @RequestBody Usuario cliente){
+	public ResponseEntity<?> guardarCliente(@Valid @RequestBody Usuario cliente){
 		
 		try {
 			LOGGUER.info("Inicio Creacion de cliente");
