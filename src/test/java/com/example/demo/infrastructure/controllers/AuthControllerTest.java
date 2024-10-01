@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.infrastructure.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -21,10 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.application.services.UsuarioService;
 import com.example.demo.infrastructure.config.SecurityConfig;
-import com.example.demo.infrastructure.controllers.AuthController;
 import com.example.demo.infrastructure.filters.MyUserDetailsService;
 import com.example.demo.infrastructure.providers.JwtTokenProvider;
-
 
 @WebMvcTest(AuthController.class)
 @Import(SecurityConfig.class)

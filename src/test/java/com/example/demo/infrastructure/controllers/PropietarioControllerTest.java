@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.infrastructure.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -24,7 +24,6 @@ import com.example.demo.application.services.PropietarioService;
 import com.example.demo.domain.models.Rol;
 import com.example.demo.domain.models.Usuario;
 import com.example.demo.infrastructure.config.SecurityConfig;
-import com.example.demo.infrastructure.controllers.PropietarioController;
 import com.example.demo.infrastructure.filters.MyUserDetailsService;
 import com.example.demo.infrastructure.providers.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
