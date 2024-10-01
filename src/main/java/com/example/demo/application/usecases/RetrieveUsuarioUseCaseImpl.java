@@ -1,5 +1,7 @@
 package com.example.demo.application.usecases;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.models.Usuario;
@@ -26,7 +28,8 @@ public class RetrieveUsuarioUseCaseImpl implements RetrieveUsuarioUseCase{
 	        throw new IllegalArgumentException("El ID debe ser un número positivo.");
 	    }
 		
-		return propietarioRepositoryPort.findById(id).orElseThrow();
+		return propietarioRepositoryPort.findById(id)
+				.orElseThrow(()-> new NoSuchElementException("No se encontro ningun Usuario con el id: "+id));
 	}
 
 	@Override
@@ -36,7 +39,12 @@ public class RetrieveUsuarioUseCaseImpl implements RetrieveUsuarioUseCase{
 	        throw new IllegalArgumentException("El Correo no puede ser nulo.");
 	    }
 		
-		return propietarioRepositoryPort.findUsuarioLoginByCorreo(correo).orElseThrow();
+		if (correo.trim().isEmpty()) {
+			throw new IllegalArgumentException("El Correo no puede ser vacio.");
+		}
+		
+		return propietarioRepositoryPort.findUsuarioLoginByCorreo(correo)
+				.orElseThrow(()-> new NoSuchElementException("No se encontro ningun Usuario con el correo: "+correo));
 	}
 
 }
