@@ -4,5 +4,5 @@ import com.example.demo.domain.models.Usuario;
 
 public interface CreateEmpleadoUseCase {
 
-	public Usuario createEmpledo(Usuario empelado);
+	public Usuario createEmpleado(Usuario empleado,String token);
 }

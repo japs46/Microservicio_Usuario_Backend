@@ -15,8 +15,8 @@ public class EmpleadoService implements CreateEmpleadoUseCase{
 	}
 
 	@Override
-	public Usuario createEmpledo(Usuario empelado) {
-		return createEmpleadoUseCase.createEmpledo(empelado);
+	public Usuario createEmpleado(Usuario empleado,String token) {
+		return createEmpleadoUseCase.createEmpleado(empleado,token);
 	}
 
 }
