@@ -4,7 +4,6 @@ import java.util.Date;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -12,8 +11,6 @@ import jakarta.validation.constraints.Size;
 
 public class Usuario {
 
-	@NotNull(message = "El ID no puede ser null")
-	@Min(value = 1, message = "El ID debe ser un numero positivo")
 	private final Long id;
 	
 	@NotNull(message = "El nombre no puede ser null")

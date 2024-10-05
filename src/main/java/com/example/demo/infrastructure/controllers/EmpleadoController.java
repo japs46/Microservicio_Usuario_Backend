@@ -14,6 +14,7 @@ import com.example.demo.domain.models.Usuario;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -32,12 +33,12 @@ public class EmpleadoController {
     @ApiResponse(responseCode = "200", description = "empleado guardada exitosamente")
     @ApiResponse(responseCode = "406", description = "No se aceptó la solicitud")
 	@PostMapping("/guardar")
-	public ResponseEntity<?> guardarEmpleado(@Valid @RequestBody Usuario empleado){
+	public ResponseEntity<?> guardarEmpleado(@Valid @RequestBody Usuario empleado, HttpServletRequest request){
 		
 		try {
 			LOGGUER.info("Inicio Creacion de empleado");
-			
-			Usuario empleadoBd = empleadoService.createEmpledo(empleado);
+			String authHeader = request.getHeader("Authorization");
+			Usuario empleadoBd = empleadoService.createEmpleado(empleado,authHeader);
 			
 			return ResponseEntity.ok(empleadoBd);
 			
